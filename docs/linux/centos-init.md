@@ -10,15 +10,19 @@ CentOS Linux release 7.5.1804 (Core)  # 出现该信息之后，表示升级成�
 ## 主机名设置
 FQDN 标准，例如: ecs-192-168-11-101.dripsea.com
 
+hostnamectl set-hostname ecs-192-168-11-101.dripsea.com
+
 ## hosts 文件设置
 ```shell
 vi /etc/hosts
 # 192.168.11.101 ecs-192-168-11-101.dripsea.com
+
+ping `hostname`  # 测试是否修改成功
 ```
 
 ## 关闭 Selinx
 ```shell
-sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 ```
 
 ## 关闭防火墙（或者自行控制）
@@ -35,7 +39,7 @@ date -R 或者 timedatectl
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # 修改系统语言环境
-sudo echo 'LANG="en_US.UTF-8"' >> /etc/profile;source /etc/profile
+echo 'export LANG="en_US.UTF-8"' >> /etc/profile;source /etc/profile
 ```
 
 ## Kernel 内核性能调优
