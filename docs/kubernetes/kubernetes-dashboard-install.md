@@ -1,7 +1,10 @@
 # Kubernetes Dashboard 的安装
 
 ## 镜像准备
-由于网络原因，这里跟一样的操作一样，先拉取备份的镜像，然后再重新 tag 即可，操作如下:
+
+> 注意: 目前为止，默认是使用 k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.0 这个 v1.10.0 版本的镜像。
+
+由于网络原因，这里跟以前的操作一样，先拉取备份的镜像，然后再重新 tag 即可，操作如下:
 ```
 docker pull mirrorgooglecontainers/kubernetes-dashboard-amd64:v1.8.3
 docker tag mirrorgooglecontainers/kubernetes-dashboard-amd64:v1.8.3 k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3
@@ -11,6 +14,7 @@ docker pull mirrorgooglecontainers/kubernetes-dashboard-amd64:v1.10.0
 docker tag mirrorgooglecontainers/kubernetes-dashboard-amd64:v1.10.0 k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.0
 docker rmi mirrorgooglecontainers/kubernetes-dashboard-amd64:v1.10.0
 ```
+
 ## 拉取配置文件
     
 ```yaml
@@ -200,8 +204,9 @@ spec:
     k8s-app: kubernetes-dashboard
 ```
 
-这样我们就可以使用外部的 20043 来进行访问了
-注意: K8S 的端口是有范围的，默认 30000+
+这样我们就可以使用外部的 30843 来进行访问了
+
+> 注意: K8S 的端口是有范围的，默认 30000+
 
 ## 启动
 kubectl create -f kubernetes-dashboard.yaml
@@ -250,11 +255,11 @@ kubectl get secret -n kube-system | grep kubernetes-dashboard-token
 kubectl get secret kubernetes-dashboard-token-rhgcf -o jsonpath={.data.token} -n kube-system | base64 -d
 ```
 
-然后拿到该 token 即可进行访问了
+然后拿到该 token 即可进行访问，并且有 admin 权限了，若是需要了解该 dashboard 更多的信息，可以参考官方的 github 项目地址 <https://github.com/kubernetes/dashboard> 
 
 ## 参考
-https://segmentfault.com/a/1190000012755243
-https://blog.csdn.net/yjh314/article/details/80942232
-https://blog.csdn.net/gunner2014/article/details/80966671
-https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
+https://segmentfault.com/a/1190000012755243  
+https://blog.csdn.net/yjh314/article/details/80942232  
+https://blog.csdn.net/gunner2014/article/details/80966671  
+https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/  
 https://kubernetes.io/docs/reference/access-authn-authz/authentication/
